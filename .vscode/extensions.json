@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "bierner.color-info",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "GitHub.copilot",
+    "GitHub.github-vscode-theme",
+    "GitHub.vscode-pull-request-github",
+    "kisstkondoros.vscode-codemetrics",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "njpwerner.autodocstring",
+    "octref.vetur",
+    "SonarSource.sonarlint-vscode",
+    "sourcery.sourcery"
+  ],
+  "unwantedRecommendations": []
+}
