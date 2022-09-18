@@ -1,3 +1,7 @@
+# Custom
+
+*.ipynb
+
 # Dataset
 dataset/style
 dataset/content
