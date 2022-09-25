@@ -3,12 +3,12 @@ import os
 from PIL import Image
 from pydantic import NonNegativeInt
 
-from src.constants import DATASET_ROOT
 from src.dataset.models import ImageCategory, StyleCategory
+from src.utils.constants import DATASET_ROOT
 
 
 def load_image(path: str) -> Image.Image:
-    return Image.open(path)
+    return Image.open(path).convert("RGB")
 
 
 def load_image_from_dataset(
