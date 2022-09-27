@@ -22,5 +22,4 @@ if __name__ == "__main__":
         learning_rate=1e1,
         optimizer_type=OptimizerType.ADAM,
         device=DeviceType.GPU,
-        save_path="./output",
     )

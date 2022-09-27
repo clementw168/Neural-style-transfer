@@ -6,6 +6,7 @@ from src.dataset.processing_images import (
     get_postprocessing_transforms,
     get_preprocessing_transforms,
 )
+from src.image_based.logger import TrainingLogger
 from src.image_based.models import SeedType
 from src.image_based.training import training_step
 from src.image_based.utils import get_image_seed
@@ -30,6 +31,8 @@ def run_image_based_training_loop(
     if save_path is not None:
         if not os.path.exists(save_path):
             os.makedirs(save_path)
+    logger = TrainingLogger(log_path=save_path)
+
     width, height = raw_content_image.size
     transform = get_preprocessing_transforms((height, width))
     untransform = get_postprocessing_transforms()
@@ -55,11 +58,11 @@ def run_image_based_training_loop(
             generated_image, loss_function, optimizer
         )
 
-        if step % 1 == 0:
-            print(
-                f"Step {step}: Total loss: {total_loss}, Content loss: {content_loss}, Style loss: {style_loss}, Total variation loss: {total_variation_loss}"
-            )
-
-            untransform(generated_image.clone().detach().cpu()).save(
-                f"{save_path}/{step}.png"
-            )
+        logger.update(
+            image=untransform(generated_image.clone().detach().cpu()),
+            step=step,
+            total_loss=total_loss,
+            content_loss=content_loss,
+            style_loss=style_loss,
+            total_variation_loss=total_variation_loss,
+        )

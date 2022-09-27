@@ -7,7 +7,7 @@ def training_step(
     generated_image: torch.Tensor,
     loss_function: PerceptualLoss,
     optimizer: torch.optim.Optimizer,
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor | None]:
+) -> tuple[float, float, float, float | None]:
     total_loss, content_loss, style_loss, total_variation_loss = loss_function(
         generated_image
     )
@@ -17,8 +17,8 @@ def training_step(
     optimizer.zero_grad()
 
     return (
-        total_loss.cpu(),
-        content_loss.cpu(),
-        style_loss.cpu(),
-        total_variation_loss.cpu() if total_variation_loss else None,
+        total_loss.cpu().item(),
+        content_loss.cpu().item(),
+        style_loss.cpu().item(),
+        total_variation_loss.cpu().item() if total_variation_loss else None,
     )
