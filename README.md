@@ -16,9 +16,9 @@ Pytorch implementation of Neural Style Transfer (NST). This is mainly a personal
 - [ ] Image optimization based
 
   - [x] Simple style transfer
-  - [ ] Several style transfer
-  - [ ] Several content transfer
-  - [ ] Several style and content transfer
+  - [ ] Several styles transfer
+  - [ ] Several contents transfer
+  - [ ] Several styles and contents transfer
 
 - [ ] Model optimization based
 

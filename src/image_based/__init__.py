@@ -30,8 +30,8 @@ def run_image_based_training_loop(
     if save_path is not None:
         if not os.path.exists(save_path):
             os.makedirs(save_path)
-
-    transform = get_preprocessing_transforms(raw_content_image.size)
+    width, height = raw_content_image.size
+    transform = get_preprocessing_transforms((height, width))
     untransform = get_postprocessing_transforms()
 
     content_image = transform(raw_content_image)
