@@ -43,12 +43,25 @@ class TrainingLogger:
         if total_variation_loss is not None:
             self.total_variation_loss.append(total_variation_loss)
 
-        if step % self.update_steps == 0:
-            print(
-                f"Step {step}: Total loss: {total_loss}, Content loss: {content_loss}, Style loss: {style_loss}, Total variation loss: {total_variation_loss}"
+        if (step + 1) % self.update_steps == 0:
+            self.log(
+                image, step, total_loss, content_loss, style_loss, total_variation_loss
             )
-            self.plot_loss()
-            self.save_image(image, step)
+
+    def log(
+        self,
+        image: Image,
+        step: PositiveInt,
+        total_loss: float,
+        content_loss: float,
+        style_loss: float,
+        total_variation_loss: float | None = None,
+    ):
+        print(
+            f"Step {step}: Total loss: {total_loss}, Content loss: {content_loss}, Style loss: {style_loss}, Total variation loss: {total_variation_loss}"
+        )
+        self.plot_loss()
+        self.save_image(image, step)
 
     def plot_loss(self):
         plt.plot(self.steps, self.total_loss, label="Total loss")
@@ -62,5 +75,5 @@ class TrainingLogger:
         plt.savefig(f"{self.log_path}/loss.png")
         plt.close()
 
-    def save_image(self, image: Image, step: PositiveInt):
+    def save_image(self, image: Image, step: PositiveInt | str):
         image.save(f"{self.log_path}/image_{step}.png")

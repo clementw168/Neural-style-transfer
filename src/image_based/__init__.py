@@ -1,6 +1,7 @@
 import os
 
 from PIL.Image import Image
+from pydantic import PositiveFloat, PositiveInt
 
 from src.dataset.processing_images import (
     get_postprocessing_transforms,
@@ -19,11 +20,12 @@ def run_image_based_training_loop(
     raw_content_image: Image,
     raw_style_image: Image,
     seed_type: SeedType,
-    steps: int,
-    content_coefficient: float,
-    style_coefficient: float,
-    total_variation_coefficient: float | None = None,
-    learning_rate: float = 0.01,
+    steps: PositiveInt,
+    content_coefficient: PositiveFloat,
+    style_coefficient: PositiveFloat,
+    total_variation_coefficient: PositiveFloat | None = None,
+    logger_update_steps: PositiveInt = 20,
+    learning_rate: PositiveFloat = 0.01,
     optimizer_type: OptimizerType = OptimizerType.ADAM,
     device: DeviceType = DeviceType.GPU,
     save_path: str | None = None,
@@ -31,7 +33,7 @@ def run_image_based_training_loop(
     if save_path is not None:
         if not os.path.exists(save_path):
             os.makedirs(save_path)
-    logger = TrainingLogger(log_path=save_path)
+    logger = TrainingLogger(log_path=save_path, update_steps=logger_update_steps)
 
     width, height = raw_content_image.size
     transform = get_preprocessing_transforms((height, width))
@@ -66,3 +68,5 @@ def run_image_based_training_loop(
             style_loss=style_loss,
             total_variation_loss=total_variation_loss,
         )
+
+    logger.save_image(untransform(generated_image.clone().detach().cpu()), "end")

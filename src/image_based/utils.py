@@ -20,8 +20,9 @@ def get_image_seed(
 
         case SeedType.RANDOM:
             seed_image = (
-                torch.randn_like(content_image) - torch.tensor(NORMALIZING_MEAN)
-            ).div(torch.tensor(NORMALIZING_STD))
+                torch.randn_like(content_image)
+                - torch.tensor(NORMALIZING_MEAN).view(3, 1, 1)
+            ).div(torch.tensor(NORMALIZING_STD).view(3, 1, 1))
 
         case _:
             raise NotImplementedError(f"Seed type {seed_type} not supported yet")

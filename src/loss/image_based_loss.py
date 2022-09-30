@@ -102,7 +102,7 @@ class PerceptualLoss:
         channels, height, width = style_features.size()
         features = style_features.view(channels, height * width)
         features_t = features.transpose(1, 0)
-        gram = features.mm(features_t) / (channels * height * width)
+        gram = features.mm(features_t)
 
         return gram.div(channels * height * width)
 

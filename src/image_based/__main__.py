@@ -14,12 +14,13 @@ if __name__ == "__main__":
     run_image_based_training_loop(
         raw_content_image=content_image,
         raw_style_image=style_image,
-        seed_type=SeedType.CONTENT_IMAGE,
-        steps=100,
-        content_coefficient=1e5,
-        style_coefficient=3e4,
+        seed_type=SeedType.RANDOM,
+        steps=1000,
+        logger_update_steps=10,
+        content_coefficient=1e2,
+        style_coefficient=0,
         total_variation_coefficient=None,
-        learning_rate=1e1,
+        learning_rate=1,
         optimizer_type=OptimizerType.ADAM,
         device=DeviceType.GPU,
     )
