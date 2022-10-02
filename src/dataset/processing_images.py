@@ -17,6 +17,15 @@ class Unnormalize:
         return tensor * self.std + self.mean
 
 
+class Clip:
+    def __init__(self, min: float, max: float):
+        self.min = min
+        self.max = max
+
+    def __call__(self, tensor: torch.Tensor) -> torch.Tensor:
+        return torch.clamp(tensor, self.min, self.max)
+
+
 def get_preprocessing_transforms(
     shape: tuple[PositiveInt, PositiveInt]
 ) -> Callable[[Image], torch.Tensor]:
@@ -33,6 +42,7 @@ def get_postprocessing_transforms() -> Callable[[torch.Tensor], Image]:
     return transforms.Compose(
         [
             Unnormalize(mean=NORMALIZING_MEAN, std=NORMALIZING_STD),
+            Clip(min=0.0, max=1.0),
             transforms.ToPILImage(),
         ]
     )  # type: ignore
