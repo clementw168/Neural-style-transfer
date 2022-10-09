@@ -38,9 +38,9 @@ As for the content dataset, I wanted to have a large pannel of different content
 
 Surprisingly, the content loss was not easy to optimize alone from a random noise image. The deeper the layer is, the harder it is to optimize. The best results are obtained with the first layer of the network.
 
-|                             conv1_1                             |                             conv2_1                             |                             conv3_1                             |                             conv4_1                             |                             conv5_1                             |
-| :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: |
-| ![](visualizations/content_optimization/content_conv1_1_3k.png) | ![](visualizations/content_optimization/content_conv2_1_3k.png) | ![](visualizations/content_optimization/content_conv3_1_3k.png) | ![](visualizations/content_optimization/content_conv4_1_3k.png) | ![](visualizations/content_optimization/content_conv5_1_3k.png) |
+|                             conv1_1                             |                             conv2_1                             |                             conv3_1                             |                             conv4_1                             |                             conv5_1                             |                  conv5_1 w/ total variation loss                   |
+| :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :----------------------------------------------------------------: |
+| ![](visualizations/content_optimization/content_conv1_1_3k.png) | ![](visualizations/content_optimization/content_conv2_1_3k.png) | ![](visualizations/content_optimization/content_conv3_1_3k.png) | ![](visualizations/content_optimization/content_conv4_1_3k.png) | ![](visualizations/content_optimization/content_conv5_1_3k.png) | ![](visualizations/content_optimization/content_conv5_1_3k_tv.png) |
 
 ## References
 
