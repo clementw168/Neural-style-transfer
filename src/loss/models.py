@@ -28,7 +28,7 @@ class NetworkAchitecture(str, Enum):
 
 class VGG19LossLayers(PerceptualLayers):
     STYLE = {"conv1_1", "conv2_1", "conv3_1", "conv4_1", "conv5_1"}
-    CONTENT = {"conv4_2"}
+    CONTENT = {"conv5_1"}
 
 
 class VGG16LossLayers(PerceptualLayers):

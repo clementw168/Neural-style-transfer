@@ -12,9 +12,9 @@ def training_step(
         generated_image
     )
 
+    optimizer.zero_grad()
     total_loss.backward()
     optimizer.step()
-    optimizer.zero_grad()
 
     return (
         total_loss.cpu().item(),

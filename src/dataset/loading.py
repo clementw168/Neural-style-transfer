@@ -1,7 +1,7 @@
 import os
 
 from PIL import Image
-from pydantic import NonNegativeInt
+from pydantic import NonNegativeInt, PositiveInt
 
 from src.dataset.models import ImageCategory, StyleCategory
 from src.utils.constants import DATASET_ROOT
@@ -28,6 +28,17 @@ def load_image_from_dataset(
     path = os.path.join(path, files[index])
 
     return load_image(path)
+
+
+def resize_pil_image(image: Image.Image, max_size: PositiveInt) -> Image.Image:
+    width, height = image.size
+    if width > height:
+        height = int(max_size * height / width)
+        width = max_size
+    else:
+        width = int(max_size * width / height)
+        height = max_size
+    return image.resize((width, height))
 
 
 if __name__ == "__main__":

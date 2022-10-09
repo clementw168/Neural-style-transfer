@@ -32,6 +32,16 @@ For the style dataset, I wanted to have a large pannel of different styles. I ch
 
 As for the content dataset, I wanted to have a large pannel of different content. I chose to take a few pictures from all kinds of categories.
 
+## Results
+
+### Content loss
+
+Surprisingly, the content loss was not easy to optimize alone from a random noise image. The deeper the layer is, the harder it is to optimize. The best results are obtained with the first layer of the network.
+
+|                             conv1_1                             |                             conv2_1                             |                             conv3_1                             |                             conv4_1                             |                             conv5_1                             |
+| :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: |
+| ![](visualizations/content_optimization/content_conv1_1_3k.png) | ![](visualizations/content_optimization/content_conv2_1_3k.png) | ![](visualizations/content_optimization/content_conv3_1_3k.png) | ![](visualizations/content_optimization/content_conv4_1_3k.png) | ![](visualizations/content_optimization/content_conv5_1_3k.png) |
+
 ## References
 
 - Jing, Y., Yang, Y., Feng, Z., Ye, J., Yu, Y., & Song, M. (2017). Neural Style Transfer: A Review. arXiv. https://doi.org/10.48550/arXiv.1705.04058

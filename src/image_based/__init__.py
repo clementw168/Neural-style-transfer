@@ -12,6 +12,7 @@ from src.image_based.models import SeedType
 from src.image_based.training import training_step
 from src.image_based.utils import get_image_seed
 from src.loss.image_based_loss import PerceptualLoss
+from src.loss.models import NetworkAchitecture
 from src.utils.models import DeviceType
 from src.utils.optimizers import OptimizerType, get_optimizer
 
@@ -27,13 +28,17 @@ def run_image_based_training_loop(
     logger_update_steps: PositiveInt = 20,
     learning_rate: PositiveFloat = 0.01,
     optimizer_type: OptimizerType = OptimizerType.ADAM,
+    network_architecture: NetworkAchitecture = NetworkAchitecture.VGG19,
     device: DeviceType = DeviceType.GPU,
     save_path: str | None = None,
+    zoom_loss: bool = True,
 ) -> None:
     if save_path is not None:
         if not os.path.exists(save_path):
             os.makedirs(save_path)
-    logger = TrainingLogger(log_path=save_path, update_steps=logger_update_steps)
+    logger = TrainingLogger(
+        log_path=save_path, update_steps=logger_update_steps, zoom_loss=zoom_loss
+    )
 
     width, height = raw_content_image.size
     transform = get_preprocessing_transforms((height, width))
@@ -50,6 +55,7 @@ def run_image_based_training_loop(
         content_coefficient=content_coefficient,
         style_coefficient=style_coefficient,
         total_variation_coefficient=total_variation_coefficient,
+        network_architecture=network_architecture,
         device=device,
     )
 

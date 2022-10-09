@@ -7,8 +7,14 @@ from pydantic import PositiveInt
 
 
 class TrainingLogger:
-    def __init__(self, update_steps: PositiveInt = 1, log_path: str | None = None):
+    def __init__(
+        self,
+        update_steps: PositiveInt = 1,
+        log_path: str | None = None,
+        zoom_loss: bool = True,
+    ):
         self.update_steps = update_steps
+        self.zoom_loss = zoom_loss
 
         self.log_path = (
             log_path
@@ -57,13 +63,17 @@ class TrainingLogger:
         style_loss: float,
         total_variation_loss: float | None = None,
     ):
-        print(
-            f"Step {step}: Total loss: {total_loss}, Content loss: {content_loss}, Style loss: {style_loss}, Total variation loss: {total_variation_loss}"
+        total_variation_loss = (
+            0.0 if total_variation_loss is None else total_variation_loss
         )
-        self.plot_loss()
+        print(
+            f"Step {step}: Total loss: {total_loss:.5f}, Content loss: {content_loss:.5f}, Style loss: {style_loss:.5f}, Total variation loss: {total_variation_loss:.5f}"
+        )
+        self.plot_loss(zoom=self.zoom_loss)
+
         self.save_image(image, step)
 
-    def plot_loss(self):
+    def plot_loss(self, zoom: bool = False):
         plt.plot(self.steps, self.total_loss, label="Total loss")
         plt.plot(self.steps, self.content_loss, label="Content loss")
         plt.plot(self.steps, self.style_loss, label="Style loss")
@@ -74,6 +84,20 @@ class TrainingLogger:
         plt.legend()
         plt.savefig(f"{self.log_path}/loss.png")
         plt.close()
+
+        if zoom and len(self.total_loss) > 500:
+            plt.plot(self.steps[500:], self.total_loss[500:], label="Total loss")
+            plt.plot(self.steps[500:], self.content_loss[500:], label="Content loss")
+            plt.plot(self.steps[500:], self.style_loss[500:], label="Style loss")
+            if len(self.total_variation_loss) > 0:
+                plt.plot(
+                    self.steps[500:],
+                    self.total_variation_loss[500:],
+                    label="Total variation loss",
+                )
+            plt.legend()
+            plt.savefig(f"{self.log_path}/loss_zoom.png")
+            plt.close()
 
     def save_image(self, image: Image, step: PositiveInt | str):
         image.save(f"{self.log_path}/image_{step}.png")

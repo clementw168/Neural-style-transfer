@@ -87,24 +87,20 @@ class PerceptualLoss:
     def total_variation_loss(self, generated_image: torch.Tensor) -> torch.Tensor:
         return (
             torch.mean(
-                torch.square(
-                    generated_image[:, :, :, :-1] - generated_image[:, :, :, 1:]
-                )
-                + torch.square(
-                    generated_image[:, :, :-1, :] - generated_image[:, :, 1:, :]
-                )
+                torch.square(generated_image[:, :, :-1] - generated_image[:, :, 1:])
             )
-            * self.total_variation_coefficient
-        )
+            + torch.mean(
+                torch.square(generated_image[:, :-1, :] - generated_image[:, 1:, :])
+            )
+        ) * self.total_variation_coefficient
 
     @staticmethod
     def gram_matrix(style_features: torch.Tensor) -> torch.Tensor:
         channels, height, width = style_features.size()
         features = style_features.view(channels, height * width)
         features_t = features.transpose(1, 0)
-        gram = features.mm(features_t)
 
-        return gram.div(channels * height * width)
+        return features.mm(features_t).div(channels * height * width)
 
     def forward(
         self, generated_image: torch.Tensor
@@ -123,7 +119,7 @@ class PerceptualLoss:
             style_loss += self.style_loss(
                 self.style_representation[layer], generated_features[layer]
             )
-        style_loss *= self.style_coefficient / len(self.loss_layers.STYLE)
+        style_loss *= self.style_coefficient  # / len(self.loss_layers.STYLE)
 
         total_loss = content_loss + style_loss
 
