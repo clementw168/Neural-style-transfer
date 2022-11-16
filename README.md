@@ -1,6 +1,6 @@
 # Neural Style Transfer
 
-Pytorch implementation of Neural Style Transfer (NST). This is mainly a personal project to review all the litterature about NST, implement some of the meaningful ideas and test some personal experiments.
+Pytorch implementation of Neural Style Transfer (NST). This is mainly a personal project to review all the litterature about NST, implement some of the meaningful ideas and test some personal experiments. This work is still in progress.
 
 ## To-do list
 
